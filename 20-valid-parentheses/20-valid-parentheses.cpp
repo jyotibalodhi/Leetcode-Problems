@@ -7,9 +7,7 @@ public:
         stk.push(s[0]);
         int i=0;
                        
-        
-        while(!stk.empty()){
-            if(i< s.length()){
+          
                 for(i=1; i<s.length();i++){
                       if(s[i]=='(' || s[i]=='['|| s[i]=='{' ){
                           stk.push(s[i]);
@@ -26,15 +24,11 @@ public:
                         return false;
                     }
                 }
-            }
-            else{
-                if(!stk.empty()) {
-                    return false;
-                }
-            }
-        }
+            
         
-     return true;
+      if(stk.empty())  
+          return true;
+        return false;
    
     }
 };
