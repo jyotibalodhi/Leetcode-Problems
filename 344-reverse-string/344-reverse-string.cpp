@@ -1,11 +1,12 @@
 class Solution {
-public:  
-    int i=0,j=1,k;
-    void reverseString(vector<char>& s) {
-        k=s.size()-j;
-        j++;
-        if(i>=k) return ;
-        swap(s[i++],s[k]);
-        reverseString(s);
+public:
+    int i=0;
+    void reverseString(vector<char>& s,int j=-1) {
+        if(j==-1) j=s.size()-1;
+        
+        if(i==j || i>j) return;
+        
+        swap(s[i++],s[j--]);
+        reverseString(s,j);
     }
 };
