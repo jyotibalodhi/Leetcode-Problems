@@ -1,21 +1,35 @@
 class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        int n=nums.size();
-        unordered_map<int,int> umap1{0},umap2;
+         int n=nums.size();
+        unordered_map<int,int> umap;
         for(int i=0;i<n;i++){
-            if(umap1[nums[i]]>k || umap2[nums[i]]<=1)
-           { umap1[nums[i]]=abs(i-umap1[nums[i]]);}
-            umap2[nums[i]]++;
-            
+            umap[nums[i]]=-1;
         }
-        
-        for(int i=0;i<n;i++){
-            if(umap2[nums[i]]>=2){
-                if(umap1[nums[i]]<=k)
-                    return true;
-            }
-        }
+       for(int i=0;i<n;i++){
+           if(umap[nums[i]]==-1){
+               umap[nums[i]]=i;
+           }
+           else{
+               if((i-umap[nums[i]])<=k){
+                   return true;
+               }
+               else{
+                   umap[nums[i]]=i;
+               }
+           }
+       }
         return false;
     }
 };
+
+
+
+
+
+
+
+
+
+// 1,2,3,4,5,6,2,2
+// k=1
