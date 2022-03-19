@@ -1,47 +1,26 @@
 class Solution {
 public:
-    vector<int> finalPrices(vector<int>& p) {
-        stack<int> stk1;
-        stack<int> stk2;
-        // vector<int> res={0};
-        for(int i=p.size()-1;i>=0;i--){
-            stk1.push(p[i]);
+    vector<int> finalPrices(vector<int>& prices) {
+       int n=prices.size();
+        stack<int> st;
+        st.push(prices[n-1]);
+        for(int i=n-2;i>=0;--i){
+            int check=prices[i];
+        if(check>=st.top()){
+            prices[i]-=st.top();
+            st.push(check);
         }
-        int i=0;
-        while(!stk1.empty()){
-            int val =stk1.top();
-            stk1.pop();
-            if(stk1.empty()){
-                p[i] =val;
-                break;
-            }
-            if(val>=stk1.top()){
-                p[i]=val-stk1.top();
-                i++;
-            }
-            else{
-                while (!stk1.empty()&& stk1.top() >val){
-                    int temp=stk1.top();
-                    stk1.pop();
-                    stk2.push(temp);
-                }
-                if(stk1.empty()){
-                    p[i]=val;
-                    i++;
-                }
-                else if(stk1.top()<=val){
-                    p[i]=val-stk1.top();
-                    i++;
-                }
-                
-                while(!stk2.empty()){
-                    int temp=stk2.top();
-                    stk2.pop();
-                    stk1.push(temp);
-                }
-            }
+        else{
+            while(!st.empty() && st.top()>check){
+                st.pop();
         }
-        
-        return p;
+        if(!st.empty()){
+            prices[i]-=st.top();
+        }
+        st.push(check);
     }
+ }
+    return prices;
+    
+}
 };
