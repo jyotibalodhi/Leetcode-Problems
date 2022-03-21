@@ -15,14 +15,12 @@ public:
         for(auto i:freq){
             pq.push(make_pair(i.second,i.first));
         }
-        int i=0;
-        while(!pq.empty()){
-            int len= pq.top().first;
-            while(len--){
-                s[i++]=pq.top().second;
-            }
-            pq.pop();
-        }
+        s="";
+         while(!pq.empty()){
+            s+=string(pq.top().first,pq.top().second); 
+             pq.pop();
+         }
+           
         
         return s;
     }
