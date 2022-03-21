@@ -18,7 +18,6 @@ public:
             pq.push(i.second);
         }
 
-        int i=0;
         while(!pq.empty()){
             int top= pq.top();
             if(prev >=half) {
