@@ -8,13 +8,12 @@ public:
     }
     
     int res = 0;
-    
-    for(int i=0;i<nums.size();i++){
-        if(freq[nums[i]]>1){
-            res +=freq[nums[i]] -1;
-            freq[nums[i]]--;
+        for(auto i:freq) 
+        {
+            int n = i.second; 
+            res += ((n)*(n-1))/2;
+            
         }
-    }
     
     return res;
     
