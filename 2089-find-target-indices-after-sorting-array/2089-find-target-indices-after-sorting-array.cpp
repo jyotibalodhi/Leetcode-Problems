@@ -1,19 +1,16 @@
 class Solution {
 public:
     vector<int> targetIndices(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
+        int small=0,count=0,k=0;
         
-        vector<int> res;
-        int n=nums.size();
-        
-        if( nums[n-1]< target) return res;
-        
-        
-        for(int i=0;i<n;i++){
-            if(nums[i]==target) 
-                res.push_back(i);
+        for(auto n:nums) {
+            if(n<target)    small++;                                   
+            if(n==target)   count++;                                   
         }
         
+        vector<int> res(count);
+        for(int i=small;i<small+count;i++)      
+            res[k++]=i;
         return res;
     }
 };
