@@ -12,64 +12,25 @@
 class Solution {
 public:
     int sumEvenGrandparent(TreeNode* root) {
+        if(root==NULL) 
+		     return 0;
+        
         int sum=0;
-        
-        if(!root->left && !root->right) return 0;
-        queue<TreeNode *> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode *node= q.front();
-            q.pop();
-            if(node->val %2 !=0)  {
-                 if(node->left){
-                    if(node->left->left || node->left->right)
-                      {  
-                            q.push(node->left);
-                      }
-                    }
-                 if(node->right){
-                    if(node->right->left || node->right->right)
-                    { 
-                        q.push(node->right);
-                     }
-                }
-                 continue;
-            }
-            else{
-                
-                //for left subtree
-                if(node->left){
-                    if(node->left->left || node->left->right)
-                      {  
-                            q.push(node->left);
-                        if(node->left->left){
-                            cout<<node->left->left->val<<" + ";
-                            sum+=node->left->left->val;
-                        }
-                        if(node->left->right){
-                            cout<<node->left->right->val<<" + ";
-                            sum+=node->left->right->val;
-                        }
-                    }
-                }
-                    //for right subtree
-                     if(node->right){
-                if(node->right->left || node->right->right)
-                   { 
-                        q.push(node->right);
-                        if(node->right->left){
-                            cout<<node->right->left->val<<"+ ";
-                            sum+=node->right->left->val;
-                        }
-                        if(node->right->right){
-                            cout<<node->right->right->val<<"+ ";
-                            sum+=node->right->right->val;
-                        }
-                }
-                }
-            }
+
+        if(root->val%2==0){
+            if(root->left!=NULL && root->left->left!=NULL)
+                sum+=root->left->left->val;
+            if(root->left!=NULL && root->left->right!=NULL)
+                sum+=root->left->right->val;
+            if(root->right!=NULL && root->right->right!=NULL)
+                sum+=root->right->right->val;
+            if(root->right!=NULL && root->right->left!=NULL)
+                sum+=root->right->left->val;
         }
-        
+
+        sum+=sumEvenGrandparent(root->left); 
+        sum+=sumEvenGrandparent(root->right); 
+		
         return sum;
     }
 };
