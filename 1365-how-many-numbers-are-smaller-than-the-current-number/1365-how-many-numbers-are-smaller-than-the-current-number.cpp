@@ -1,26 +1,20 @@
 class Solution {
 public:
     vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
-        vector<int> arr;
-        vector<int> res(nums.size());
+      unordered_map<int,int> umap;
+        vector<int> arr =nums;
         
-        arr =nums;
-        sort(arr.begin(),arr.end());
-        
+        sort(arr.begin(), arr.end());
         int n= nums.size();
         
-        for( int i=0; i<n;i++){
-            int j = n-1;
-            while(arr[j]>= nums[i]){
-                j--;
-                if(j==0 && arr[j]>= nums[i] ){
-                    j=-1;
-                    break;
-                }
-            }
-            res[i]=j+1;
+        for(int i=n-1;i>=0;i--){
+            umap[arr[i]] = i;
         }
         
-        return res;
+        for(int i=0;i<n;i++){
+            nums[i]= umap[nums[i]];
+        }
+        
+        return nums;
     }
 };
