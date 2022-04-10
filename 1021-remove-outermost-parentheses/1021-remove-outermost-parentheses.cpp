@@ -1,29 +1,19 @@
 class Solution {
 public:
     string removeOuterParentheses(string s) {
-        string res="";
-        stack<char> stk;
-        
-        for(auto i: s){
-            if(i=='('){
-                if(stk.empty())
-                    stk.push(i);
-                else
-                {
-                    stk.push(i);
-                    res+=i;
+        int count = 0;
+        std::string str;
+        for (char c : s) {
+            if (c == '(') {
+                if (count++) {
+                    str += '(';
                 }
-            }
-            else{
-                stk.pop();
-                if(stk.empty())
-                    continue;
-                else{
-                    res+=i;
+            } else {
+                if (--count) {
+                    str += ')';
                 }
             }
         }
-        
-        return res;
+        return str;
     }
 };
