@@ -1,21 +1,29 @@
 class BSTIterator {
-public:
-    int curr = 0, pos = 0, store[10001];
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        dfs(root->left);
-        store[pos++] = root->val;
-        dfs(root->right);
+        
+private:
+    void inOrder(TreeNode* root) {
+        if (!root)
+            return;
+        inOrder(root->left);
+        nodes.push_back(root->val);
+        inOrder(root->right);
     }
+    
+    vector<int> nodes;
+    int curr = 0;
+    
+public:
     BSTIterator(TreeNode* root) {
-        dfs(root);
+        inOrder(root);
     }
     
     int next() {
-        return store[curr++];
+        curr++;
+        return nodes[curr-1];
     }
     
     bool hasNext() {
-        return curr < pos;
+        return curr != nodes.size();
     }
+
 };
