@@ -7,7 +7,6 @@ public:
         //transpose
         for( int i=0;i<n;i++){
             for(int j=0;j<i;j++){
-                if(i==j) continue;
                 swap(mat[i][j],mat[j][i]);
             }
         }
