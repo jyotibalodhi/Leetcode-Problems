@@ -21,13 +21,11 @@ private:
 public:
     vector<vector<int>> permuteUnique(vector<int>& nums) {
         set<vector<int>> s;        
-        vector<vector<int>> ans;
         
         solve(nums,s,{});
         
-        for(auto i:s){
-            ans.push_back(i);
-        }
+        vector<vector<int>> ans(s.begin(),s.end());
+
         return ans;
     }
 };
