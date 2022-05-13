@@ -15,34 +15,21 @@ public:
         : val(_val), left(_left), right(_right), next(_next) {}
 };
 */
-
 class Solution {
 public:
+    void postOrder(Node* root, Node* next){
+        if(!root)
+            return;
+        postOrder(root->left, root->right);
+        root->next = next;
+        if(next)
+            postOrder(root->right, next->left);
+        else
+            postOrder(root->right, NULL);
+        return;
+    }
     Node* connect(Node* root) {
-       if(!root) return root;
-        
-        queue<Node *> q;
-        q.push(root);
-        q.push(NULL);  // root's next always NULL
-        
-        while(q.size()>1){
-            Node * curr =q.front();
-            q.pop();
-            
-            if(!curr){
-                q.push(NULL);
-                continue;
-            }
-            
-            curr->next =q.front();
-            
-            if(curr->left)
-                q.push(curr->left);
-            
-            if(curr->right)
-                q.push(curr->right);
-        }
-        
-        return root; 
+        postOrder(root, NULL);
+        return root;
     }
 };
