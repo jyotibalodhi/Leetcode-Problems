@@ -1,27 +1,12 @@
 class Solution {
 public:
-    int trap(vector<int>& h) {
-        int n= h.size();
-        int l=0, r=n-1;
-        
-        int leftMax =0, rightMax=0;
-        int ans=0;
-        
-        while(l<=r){
-            if(h[l]<=h[r]){
-                if(h[l]>leftMax) leftMax=h[l];
-                else
-                    ans += leftMax - h[l];
-                l++;
-            }
-            else{
-                if(h[r]>rightMax) rightMax =h[r];
-                else
-                    ans += rightMax -h[r];
-                r--;
-            }
-        }
-        
-        return ans;
-    }
+   int trap(vector<int>& h) {
+	int water = 0, l = 0, r = h.size()-1, lmax = INT_MIN, rmax = INT_MIN;
+	while(l < r){
+		lmax = max(h[l], lmax);
+		rmax = max(h[r], rmax);
+		water += (lmax < rmax) ? lmax-h[l++] : rmax-h[r--] ;
+	}
+	return water;
+}
 };
