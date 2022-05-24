@@ -3,15 +3,19 @@ public:
     
     void solve(vector<int>& nums, vector<vector<int>> &ans, vector<int> ds, int ind){
         
-        ans.push_back(ds);
+       if(ind == nums.size()){
+           ans.push_back(ds);
+           return;
+       }
         
-        for(int i=ind;i<nums.size();i++){
-            ds.push_back(nums[i]);
-            
-            solve(nums,ans,ds,i+1);
-            ds.pop_back();
-        }
         
+        ds.push_back(nums[ind]);  //inculde
+        solve(nums,ans,ds,ind+1);
+        
+        //exclude
+        
+        ds.pop_back();
+        solve(nums,ans,ds,ind+1);
     }
     
     vector<vector<int>> subsets(vector<int>& nums) {
