@@ -8,19 +8,20 @@ class Solution
     
     bool static cmp(vector<int> &m1, vector<int> &m2){
         if(m1[1] < m2[1])  return true;
-        else if(m1[1] > m2[1]) return false;
-        else if(m1[2] < m2[2]) return true;
+        // else if(m1[1] > m2[1]) return false;
+        // else if(m1[2] < m2[2]) return true;
         return false;
     }
     public:
     int maxMeetings(int start[], int end[], int n)
     {
-        vector<vector<int>> vec(n, vector<int> (3));
+        // vector<vector<int>> vec(n, vector<int> (3));
+        vector<vector<int>> vec(n, vector<int> (2));
         
         for(int i=0;i<n;i++){
             vec[i][0] = start[i];
             vec[i][1] = end[i];
-            vec[i][2] = i+1;
+            // vec[i][2] = i+1;
         }
         
         sort(vec.begin(),vec.end(),cmp);
