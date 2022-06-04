@@ -1,44 +1,44 @@
 class Solution {
-public:
     
-    void solve(int n, vector<vector<string>> &ans, vector<string> b, vector<int> left, vector<int> upperD,vector<int> lowerD,int col){
-        if(col==n){
-            ans.push_back(b);
-            return;
-        }    
+    void solve(vector<string> &board,vector<vector<string>> &ans, vector<int> lr, vector<int> ud, vector<int> ld, int col, int n){
         
-        for(int r=0;r<n;r++){
-            if(left[r]==0 && upperD[n-1+col-r]==0 && lowerD[r + col]==0){
-                b[r][col]='Q';
-                left[r]=1;
-                upperD[n-1+col-r]=1;
-                lowerD[r + col]=1;
+        
+        if(col==n){
+            ans.push_back(board);
+            return ;
+        }
+        
+        for(int row=0;row<n;row++){
+            if(lr[row] ==0 && ud[row+col] ==0 && ld[n-1+col-row]==0){
+                lr[row]=1;
+                ud[row+col] =1;
+                ld[n-1+col-row]=1;
+                board[row][col]='Q';
                 
-                solve(n,ans,b,left,upperD,lowerD,col+1);
+                solve(board, ans, lr, ud,ld,col+1,n);
                 
-                b[r][col]='.';
-                left[r]=0;
-                upperD[n-1+col-r]=0;
-                lowerD[r + col]=0;
-                
+                 lr[row]=0;
+                ud[row+col] =0;
+                ld[n-1+col-row]=0;
+                board[row][col]='.';
             }
         }
     }
-    
-    
+public:
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> ans;
         
         string s(n,'.');
         vector<string> board(n,s);
         
-        vector<int> left(n,0);
-        vector<int> upperD(2*n-1,0);
-        vector<int> lowerD(2*n-1,0);
+        vector<vector<string>> ans;
         
-        solve(n,ans,board,left,upperD,lowerD,0);
         
-        return ans;
+        vector<int> lr(n,0);  // left row
+        vector<int> ud(2*n-1,0); // upper diagonal
+        vector<int> ld(2*n-1,0); //lower diagonal
 
+
+        solve(board, ans, lr, ud,ld,0,n);
+        return ans;
     }
 };
