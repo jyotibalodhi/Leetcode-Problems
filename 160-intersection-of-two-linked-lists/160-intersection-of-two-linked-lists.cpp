@@ -8,23 +8,21 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *ha, ListNode *hb) {
-       
-        if(!ha || !hb) return nullptr;
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *ha = headA;       
+        ListNode *hb = headB;
+
         
-        ListNode * a =ha;
-        ListNode * b= hb;
-        
-        while(a !=b){
-            if(a==b) return a;
+        while(ha != hb){
+            if(ha) ha= ha->next;
+            else
+                ha = headB;
             
-            if(!a) a= hb;
-            else a= a->next;
-            
-            if(!b) b=ha;
-            else b =b->next;
+            if(hb) hb = hb->next;
+            else
+                hb = headA;
         }
         
-        return a;
+        return ha;
     }
 };
