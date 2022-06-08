@@ -1,16 +1,13 @@
 class Solution {
 public:
     int removePalindromeSub(string s) {
+         string st=s;
         
-        int i=0;
-        int j= s.length()-1;
+        reverse(st.begin(),st.end());
         
-        while(i<j){
-            if(s[i] != s[j]) return 2;
-            i++;
-            j--;
+        if(st==s){
+            return 1;
         }
-        
-        return 1;
+        return 2;
     }
 };
