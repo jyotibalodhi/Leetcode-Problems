@@ -11,33 +11,23 @@
  */
 class Solution {
 public:
-    TreeNode * ConBST(vector<int> pre, int ps, int pe, vector<int> in,int is,int ie, unordered_map<int,int> &mp){
-        if(ps > pe ||is > ie) return NULL;
+    TreeNode* ConBST(vector<int>& pre, int &i, int bound){
         
-        TreeNode *node = new TreeNode(pre[ps]);
+        if(i >=  pre.size() || pre[i] >bound) return nullptr;
         
-        int ind = mp[node->val];
-        int leftNum = ind -is;  // No of nodes in left subtree of node
+        TreeNode * root = new TreeNode(pre[i]);
+        i++;
         
-        node->left = ConBST(pre, ps+1, ps + leftNum, in, is, ind-1, mp);
-        node->right = ConBST(pre, ps +leftNum+1, pe, in, ind+1, ie, mp);
+        root->left = ConBST(pre, i, root->val);
+        root->right = ConBST(pre, i, bound);
         
-        return node;
-        
+        return root;
     }
     
     TreeNode* bstFromPreorder(vector<int>& pre) {
+        // O(n) solution
         
-        vector<int> in = pre;
-        int n = pre.size();
-        unordered_map<int,int> mp;
-        
-        sort(in.begin(),in.end()); // inorder of BST is always sorted
-        
-        for(int i=0; i<n;i++){
-            mp[in[i]]=i;
-        }
-        TreeNode * root = ConBST(pre, 0, n-1, in, 0, n-1, mp);
-        return root;
+        int ind=0;
+        return ConBST(pre, ind, INT_MAX); // preorder, starting index, upper bound for root
     }
 };
