@@ -10,23 +10,22 @@
 
 class Solution {
 public:
-     TreeNode * dfs(TreeNode* root, TreeNode* p, TreeNode* q){
-        
-        if(!root || root == p || root == q) return root;
-        
-        TreeNode * left = dfs(root->left,p,q);
-        TreeNode * right = dfs(root->right,p,q);
-        
-        if(!left)  // LCA found in right
-            return right;
-        
-        if(!right) // LCA found in left
-            return left;
-        
-            return root;
-    }
+     
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        
-        return dfs(root,p,q);
+
+        while(root){
+            if(root->val == p->val || root->val == q->val){
+                break;
+            }
+            
+            if(root->val <p->val && root->val < q->val)  // Both on right
+                root= root->right;
+            
+            else if(root->val >p->val && root->val > q->val)  // Both on left
+                root = root->left;
+            else                   //one on left other on right, so root becomes the lca
+                break;
+        }
+        return root;
     }
 };
