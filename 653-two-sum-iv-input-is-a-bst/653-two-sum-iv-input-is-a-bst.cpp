@@ -1,31 +1,53 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
-class Solution {
-    bool solve(TreeNode* root, int k,unordered_set<int> &s){
-        if(!root) return false;
-        
-            bool l= solve(root->left,k,s);
-            if(s.find(k - root->val) != s.end())  // found in set
-            {
-                return true;
-            }
-            else s.insert(root->val); 
-            bool r = solve(root->right,k,s);
-            return r || l;
+class BSTIterator {
+    stack<TreeNode *> myStack;
+    bool reverse = true; 
+public:
+    BSTIterator(TreeNode *root, bool isReverse) {
+        reverse = isReverse; 
+        pushAll(root);
     }
+
+   
+    bool hasNext() {
+        return !myStack.empty();
+    }
+
+   
+    int next() {
+        TreeNode *tmpNode = myStack.top();
+        myStack.pop();
+        if(!reverse) pushAll(tmpNode->right);
+        else pushAll(tmpNode->left);
+        return tmpNode->val;
+    }
+
+private:
+    void pushAll(TreeNode *node) {
+        for(;node != NULL; ) {
+             myStack.push(node);
+             if(reverse == true) {
+                 node = node->right; 
+             } else {
+                 node = node->left; 
+             }
+        }
+    }
+};
+
+class Solution {
 public:
     bool findTarget(TreeNode* root, int k) {
-        unordered_set<int> s;
+        if(!root) return false; 
+        BSTIterator l(root, false); 
+        BSTIterator r(root, true); 
         
-        return solve(root, k, s);
+        int i = l.next(); 
+        int j = r.next(); 
+        while(i<j) {
+            if(i + j == k) return true; 
+            else if(i + j < k) i = l.next(); 
+            else j = r.next(); 
+        }
+        return false; 
     }
 };
