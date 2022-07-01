@@ -12,8 +12,7 @@ public:
         
         int boxes=0;
         int units=0;
-        int i=0;
-        
+
         for(int i=0;i<arr.size();i++){
             
                 int numBoxes = min(size, arr[i][0]);
