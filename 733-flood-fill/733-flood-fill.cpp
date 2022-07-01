@@ -5,11 +5,11 @@ public:
         if(image[i][j]==parColor) {
             image[i][j]=color;
             
-            vector<vector<int>> dir ={{1,0},{0,1},{-1,0},{0,-1}};
             
-            for(int k=0;k<4;k++){
-                dfs(image, dir[k][0] +i , dir[k][1] + j, color, parColor);
-            }
+            dfs(image, i-1, j, color, parColor);
+            dfs(image, i+1, j, color, parColor);
+            dfs(image, i, j-1, color, parColor);
+            dfs(image, i, j+1, color, parColor);
         }
         return;
     }
