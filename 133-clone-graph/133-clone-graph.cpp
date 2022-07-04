@@ -1,39 +1,23 @@
 
 class Solution {
+private:
+    unordered_map<Node*, Node*> m;
+    
 public:
-      Node* dfs(Node* cur,unordered_map<Node*,Node*>& mp)
-    {
-          
-        Node* clone=new Node(cur->val);
-        mp[cur]=clone;
-          
-            for(auto it:cur->neighbors)
-            {
-                if(mp.find(it)!=mp.end())   //already clone and stored in map
-                {
-                    //directly push back the clone node from map to neighbors
-                    clone->neighbors.push_back(mp[it]);    
-                }
-                else
-                    clone->neighbors.push_back(dfs(it,mp));
-            }
-           
-          return clone;
-    }
     
     Node* cloneGraph(Node* node) {
         
-        unordered_map<Node*,Node*> mp;
+        if (!node) return NULL;
+        if (m.find(node) != m.end())
+            return m[node];
         
-        if(node==NULL)
-            return NULL;
+        Node* copy = new Node(node->val);
+        m[node] = copy;
         
-        if(node->neighbors.size()==0)   //if only one node present no neighbors
-        {
-            Node* clone= new Node(node->val);
-            return clone; 
+        for(Node* neighbor: node->neighbors) {
+            copy->neighbors.push_back(cloneGraph(neighbor));
         }
         
-        return dfs(node,mp);
+        return copy;
     }
 };
