@@ -12,22 +12,23 @@
 class Solution {
 public:
     
-    void dfs(TreeNode* node, vector<int> &ds, int level,int &ans){
+    void dfs(TreeNode* node, int level,int &ans,int &height){
         
         if(node == nullptr) return;
         
-        if(level ==ds.size()){
-            ds.push_back(node->val);
+        if(level > height){
             ans = node->val;
+            height = level;
         }
-        dfs(node->left,ds,level+1,ans);
-        dfs(node->right,ds,level+1,ans);
+        
+        dfs(node->left,level+1,ans,height);
+        dfs(node->right,level+1,ans,height);
     }
     
     int findBottomLeftValue(TreeNode* root) {
-        vector<int> ds;
+        int h=0;
         int ans;
-        dfs(root, ds, 0,ans);
+        dfs(root,1,ans,h);
         return ans;
     }
 };
