@@ -1,18 +1,39 @@
 class Solution {
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-        vector<bool> table(s.size()+1, false);
-        table[0] = true;
-        
-        for(int i=0; i<=s.size(); i++){
-            if(table[i]){
-                for(auto& word:wordDict){
-                    if(s.find(word, i) == i)
-                        table[i + word.size()] = true;
-                }
-            }
+   bool  solve(int idx , string s, unordered_map<string,int> &mp ,vector<int> &dp)
+        {
+            if(idx==s.size())
+                return true;
+            
+          if(dp[idx]!=-1)
+          {
+              return dp[idx];
+          }
+           string str;
+            
+         for(int i=idx;i<s.size();i++)   
+            {
+                str+=s[i]; 
+             
+             if(mp.find(str)!=mp.end())
+             {
+                if(solve(i+1,s,mp,dp))
+                    return true;
+             }
         }
+                  return dp[idx]=false;
+
+   }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
         
-        return table[s.size()];
+        unordered_map<string,int> mp;
+        vector<int> dp(s.size(),-1);
+        
+        for(auto x: wordDict)  
+        {
+            mp[x]++;
+        }    
+        return solve(0,s,mp,dp);
     }
 };
