@@ -1,6 +1,6 @@
 class Solution {
 public:
-   bool  solve(int idx , string s, unordered_map<string,int> &mp ,vector<int> &dp)
+   bool  solve(int idx , string s, unordered_set<string> &st ,vector<int> &dp)
         {
             if(idx==s.size())
                 return true;
@@ -15,25 +15,25 @@ public:
             {
                 str+=s[i]; 
              
-             if(mp.find(str)!=mp.end())
+             if(st.find(str)!=st.end())
              {
-                if(solve(i+1,s,mp,dp))
-                    return true;
+                if(solve(i+1,s,st,dp))
+                    return dp[idx]= true;
              }
         }
-                  return dp[idx]=false;
+         return dp[idx]=false;
 
    }
     
     bool wordBreak(string s, vector<string>& wordDict) {
         
-        unordered_map<string,int> mp;
+        unordered_set<string> st;
         vector<int> dp(s.size(),-1);
         
         for(auto x: wordDict)  
         {
-            mp[x]++;
+            st.insert(x);
         }    
-        return solve(0,s,mp,dp);
+        return solve(0,s,st,dp);
     }
 };
