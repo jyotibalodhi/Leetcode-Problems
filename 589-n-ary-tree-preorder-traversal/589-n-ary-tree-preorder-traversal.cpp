@@ -21,25 +21,27 @@ public:
 class Solution {
 public:
     
-    void solve(Node *root, vector<int>& res){
-        
-        if(!root) return;
-        
-        res.push_back(root->val);
-        vector<Node *> child = root->children;
-        
-        for(int i=0;i<child.size();i++){
-            solve(child[i],res);
-        }
-
-    }
-    
     vector<int> preorder(Node* root) {
         if(!root) return {};
         
         vector<int> res;
+
+        stack<Node*> stk;
+        stk.push(root);
         
-        solve(root, res);
+        while(!stk.empty()){
+            Node * node = stk.top();
+            stk.pop();
+            res.push_back(node->val);
+            
+            vector<Node *> child = node->children;
+            
+             for(int i=child.size()-1;i>=0;i--){
+                stk.push(child[i]);
+            }
+            
+        }
+
         return res;
     }
 };
