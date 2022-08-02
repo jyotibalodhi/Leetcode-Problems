@@ -10,16 +10,15 @@ public:
         vec.push_back(word);
     }
      
-        reverse(vec.begin(),vec.end());
         
         s="";
         
-        for(int i=0;i<vec.size()-1;i++){
+        for(int i=vec.size()-1;i>0;i--){
             s += vec[i];
             s += " ";
         }
         
-        s += vec[vec.size()-1];
+        s += vec[0];
         
         return s;
     }
