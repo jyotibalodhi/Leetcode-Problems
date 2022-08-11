@@ -1,28 +1,31 @@
 class Solution {
+public:
     
-    void allPer(vector<int> &nums, vector<vector<int>> &ans, int ind){
+    void solve(vector<int> &nums, vector<vector<int>> &ans, vector<int> ds, int ind){
         
-        if(ind==nums.size())
-        {
-            ans.push_back(nums);
+        if(ind == nums.size()){
+            ans.push_back(ds);
             return;
         }
         
-        
-        for(int i=ind;i<nums.size();i++){
-           swap(nums[ind],nums[i]);
-            allPer(nums,ans,ind+1);
-           swap(nums[ind],nums[i]);
+        for(int i=0;i<nums.size();i++){
+            if(nums[i] != 11)  //question constraint
+            {
+                ds.push_back(nums[i]);
+                int val = nums[i];
+                nums[i] = 11;
+                solve(nums,ans,ds,ind+1);
+                nums[i] = val;
+                ds.pop_back();
+            }
         }
-        
     }
-public:
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> ans;
-
-        allPer(nums,ans,0);
-
         
+        vector<vector<int>> ans;
+        vector<int> ds;
+        
+        solve(nums,ans, ds,0);
         return ans;
     }
 };
