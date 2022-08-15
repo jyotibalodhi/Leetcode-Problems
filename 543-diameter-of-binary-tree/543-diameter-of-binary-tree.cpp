@@ -11,30 +11,24 @@
  */
 class Solution {
 public:
- 
-    int getDiameter(TreeNode *root,int &d){
+
+    int dfs(TreeNode* root, int &ans){
+        if(!root)
+            return 0;
         
-        if(!root) return 0;
+        int maxl =  dfs(root->left,ans);
+        int maxr = dfs(root->right,ans);
         
-        
-        int maxl = getDiameter(root->left,d);
-        int maxr = getDiameter(root->right,d);   
-        
-        if(maxl +maxr > d)
-            d= maxl +maxr;
-        
+        ans = max(ans, maxl+maxr);
         return max(maxl,maxr)+1;
-        
     }
     int diameterOfBinaryTree(TreeNode* root) {
         
-        if(!root) return 0;
+        if(!root)
+            return 0;
         
-        //Diameter should be max left height + max right height - 2
-        int d=0;
-        
-        getDiameter(root,d);
-        
-        return d;
+        int ans =0;
+        dfs(root,ans);
+        return ans;
     }
 };
