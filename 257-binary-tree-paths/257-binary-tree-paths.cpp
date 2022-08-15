@@ -16,15 +16,15 @@ public:
         if(!root)
             return;
         
-        s.append(to_string(root->val) + "->");
 
         if(!root->left && !root->right)  //leaf node
         {
-            int n = s.length();
-            ans.push_back(s.substr(0,n-2));
+            ans.push_back(s + to_string(root->val));
             return;
         }
         
+        s.append(to_string(root->val) + "->");
+
         dfs(root->left,ans,s);
         dfs(root->right,ans,s);        
         
