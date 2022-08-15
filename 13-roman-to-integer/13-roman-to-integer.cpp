@@ -1,32 +1,40 @@
 class Solution {
 public:
-    int val(char c){
-        if(c=='I') return 1;
-        else if(c=='V') return 5;
-        else if(c=='X') return 10;
-        else if(c=='L') return 50;
-        else if(c=='C') return 100;
-        else if(c=='D') return 500;
-        else return 1000;
+    
+    int value(char ch){
+        switch(ch){
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+        }
+        
+        return 0;
     }
+    
     int romanToInt(string s) {
         
-        char prev=s[0];  //store previous character to compare.
-        int number=val(prev);   //add first roman letter value.
+        int val = value(s[0]);
+        int prev = value(s[0]);
         
-        for(int i=1;i<s.length();i++){  //compare prev with others and change prev.
-            if(val(prev)>=val(s[i])){  //if decreasing or equal order found...i.e., XXVII
-                number+=val(s[i]);   //just add that letter value.
+        int n = s.length();
+        
+        for(int i=1;i<n;i++){
+            int curr = value(s[i]);
+            
+            if(curr <= prev){
+                val += curr;
             }
-            else{ 
-                //if increasing order found...i.e., __IV__ or __IX__ etc.
-                //since in previous we have added the first letter of increasing order so we need to remove it(-val(prev)).
-                //then we need to add (second letter of increasing order value - value of first letter)
-                //so in total we need to add ..(second letter val - (2*prev letter val))
-                number+=val(s[i])-(2*val(prev));
+            else{
+                val = val + curr -(2*prev);
             }
-            prev=s[i];  //change prev.
+            
+            prev = curr;
         }
-        return number;
+        
+        return val;
     }
 };
