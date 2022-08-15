@@ -20,9 +20,8 @@ public:
 
 class Solution {
 public:
-    
     vector<int> preorder(Node* root) {
-        if(!root) return {};
+         if(!root) return {};
         
         vector<int> res;
 
