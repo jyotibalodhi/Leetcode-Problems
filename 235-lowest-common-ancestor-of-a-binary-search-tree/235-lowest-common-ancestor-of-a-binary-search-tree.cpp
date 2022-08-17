@@ -10,21 +10,19 @@
 
 class Solution {
 public:
-    TreeNode * lca(TreeNode* root, TreeNode* p, TreeNode *q){
-        if(!root) return NULL;
-        
-        if(root == p || root == q) //first ansector 
-            return root;
-        
-        if(p->val < root->val && q->val < root->val )  //p, q on left subtree
-            return lca(root->left,p,q);
-        else if(p->val > root->val && q->val > root->val)  //right subtree
-            return lca(root->right,p,q);
-        else
-            return root;
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         
-        return lca(root,p,q);
+        if(!root || root==p || root==q)
+            return root;
+        
+        if(p->val < root->val && q->val < root->val){
+           return lowestCommonAncestor(root->left,p,q);
+        }
+        else if(p->val > root->val && q->val > root->val){
+           return lowestCommonAncestor(root->right,p,q);
+        }
+
+            return root;
+
     }
 };
