@@ -2,25 +2,26 @@ class Solution {
 public:
     int characterReplacement(string s, int k) {
         
-        int n = s.length();
-        if(n == k) return n;
-        if(n == 1) return 1;
-
-        int res = 0;
-        int maxCnt = 0;
+        int l =0,r=0;
         
         unordered_map<char,int> mp;
         
-        for(int l = 0, r = 0; r < n; r++)
-        {
+        int res=0;
+        int len =0;
+        
+        while(r<s.length()){
             mp[s[r]]++;
-            maxCnt = max(maxCnt,mp[s[r]]);
-            while(r - l + 1 - maxCnt > k){
+            
+            len = max(len, mp[s[r]]);  //max rep char len till now
+            while(r-l+1-len >k){
                 mp[s[l]]--;
                 l++;
             }
-            res = max(r - l + 1, res);
+            
+            res = max(res, r-l+1);
+            r++;
         }
+        
         return res;
     }
 };
