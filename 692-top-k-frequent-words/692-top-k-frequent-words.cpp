@@ -1,6 +1,5 @@
 class Solution {
 public:
-    
       struct comp {
         bool operator () (pair<int, string>& a, pair<int, string>& b){
             if(a.first == b.first) return a.second > b.second;
