@@ -12,18 +12,18 @@
 class Solution {
 public:
     
-     void solve(TreeNode* root){
-        if(!root)   return;
+    TreeNode* invertTree(TreeNode* root) {
         
-        TreeNode* temp = root->left;
+        if(!root)
+            return root;
+        
+        TreeNode * temp = root->left;
         root->left = root->right;
         root->right = temp;
-        solve(root->left);
-        solve(root->right);
-    }
-    
-    TreeNode* invertTree(TreeNode* root) {
-        solve(root);
+        
+        invertTree(root->left);
+        invertTree(root->right);
+        
         return root;
     }
 };
