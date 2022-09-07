@@ -15,7 +15,7 @@
 class Solution {
 public:
     
-    void solve(TreeNode * root, int& target, ll sum, int &res, unordered_map<ll,ll> mp){
+    void solve(TreeNode * root, int& target, ll sum, int &res, unordered_map<ll,ll> &mp){
         
         if(!root){
             return;
