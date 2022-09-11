@@ -2,50 +2,46 @@ class Solution {
 public:
     vector<int> findOrder(int v, vector<vector<int>>& arr) {
         
-        //we need to find reverse topological sort 
-        // and if cycle present return empty array
         
-        unordered_map<int, vector<int>> adj;
-        vector<int> ind(v,0);
-        queue<int> q;
+        unordered_map<int, vector<int>> adj;  //adjancy list
+        vector<int> indegree(v,0);
+
+        for(int i=0;i<arr.size();i++){
+            int u = arr[i][0];
+            int v = arr[i][1];
+            
+            adj[v].push_back(u);              //directed graph
+            indegree[u]++;
+        }
+        
         
         vector<int> ans;
         
-        //making reverse adjancy list
-        for(int i=0;i<arr.size();i++){
-            adj[arr[i][1]].push_back(arr[i][0]);
-        }
-        
-        
-        for(int i=0;i<adj.size();i++){
-            for(int it: adj[i])
-            {
-                ind[it]++;
-            }      
-        }
+        queue<int> q;
         
         for(int i=0;i<v;i++){
-            if(ind[i]==0) q.push(i);
-        }
-        
-        int cnt=0;
-        
-        while(!q.empty()){
-            
-            int node = q.front();
-            q.pop();
-            
-            ans.push_back(node);
-            cnt++;
-            for(int it:adj[node]){
-                ind[it]--;
-                if(ind[it]==0) q.push(it);
+            if(indegree[i] == 0){
+                q.push(i);
             }
         }
         
-        if(cnt != v) return {};    // if cyclic graph
-
-        return ans;
-       
+        
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+                
+            ans.push_back(node);
+            for(auto it: adj[node]){
+                indegree[it]--;
+                if(indegree[it]==0)
+                     q.push(it);
+            }
+            
+        }
+        
+        if(ans.size() == v)
+            return ans;
+        
+        return {};
     }
 };
