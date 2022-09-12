@@ -1,31 +1,35 @@
 class Solution {
 public:
-    int coinChange(vector<int>& nums, int x) {
-         int n = nums.size();
-
-        vector<int> prev(x+1,0), curr(x+1,0);
-
-        for(int i =0;i<=x;i++){
-            if( i%nums[0]==0) 
-                prev[i] = i/nums[0];
+    int f(vector<int> &nums, int targ, int i, vector<vector<long long int>> &dp)
+    {
+        if (i == 0)
+        {
+            if (targ % nums[i] == 0)
+                return dp[i][targ]= targ / nums[i];
             else
-                prev[i] = 1e9;
+                return 1e9;
         }
 
-        for(int i=1;i<n;i++){
-            for(int j =0;j<= x;j++){
-                int take = 1e9;
-                if(j>= nums[i]){
-                    take = 1 + curr[j- nums[i]];
-                }
-                int notTake = prev[j];
+        if(dp[i][targ]!=-1) return dp[i][targ];
 
-               curr[j]= min(take, notTake);
-            }
-            prev = curr;
-        }
+        int not_take=0+f(nums,targ,i-1,dp);
+        int take=INT_MAX;
 
-        int ans = prev[x];
-        return ans>=1e9 ? -1 :ans;
+
+       if(nums[i]<=targ) 
+       {
+           take=1+f(nums,targ-nums[i],i,dp);
+       }
+
+       return dp[i][targ]= min(take,not_take);
+    }
+
+    int coinChange(vector<int> &nums, int target)
+    {
+        int n = nums.size();
+        vector<vector<long long int>> dp(n+1,vector<long long int> (target+1,-1));
+        long long int ans= f(nums, target, n - 1,dp);
+        if(ans>=1e9) return -1;
+        return ans;
     }
 };
