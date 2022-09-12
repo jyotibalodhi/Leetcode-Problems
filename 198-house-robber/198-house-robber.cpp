@@ -1,33 +1,35 @@
 class Solution {
 public:
-    int solve(vector<int> &nums, int ind, vector<int> &dp){
+    
+    int solve(vector<int> &nums, int i, vector<int> &dp){
         
-        if(ind == 0)  // definitely nums[1] is not picked so include nums[0] as it                         // is always +ve and increase the max
-        {
-            return nums[ind];
+        if(i<0){
+            return 0;
         }
         
-        if(ind < 0)  // nums[1] was picked
-            return 0;
+        if(i==0){
+            return dp[i] = nums[i];
+        }
         
+        if(dp[i] != -1){
+            return dp[i];
+        }
         
-        if(dp[ind] != -1) return dp[ind];
+        int take = nums[i] + solve(nums,i-2,dp);
         
-        //as adjacent houses cannot be taken therefore with ith house only take i-2
-        int rob = nums[ind] + solve(nums, ind-2, dp); 
+        int notTake = 0 + solve(nums, i-1,dp);
         
-        
-        // as house i is not taken we can take the adjacent house
-        int notRob = solve(nums, ind-1, dp);
-        
-        return dp[ind] = max(rob, notRob);
+        return dp[i] = max(take, notTake);
     }
     
+    
     int rob(vector<int>& nums) {
-        int n= nums.size();
         
-        vector<int> dp(n+1, -1);
+        int n = nums.size();
         
-        return solve(nums, n-1, dp);
+        vector<int> dp(n,-1);
+        
+        return solve(nums,n-1,dp);
+        
     }
 };
