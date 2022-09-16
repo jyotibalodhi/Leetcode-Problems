@@ -1,20 +1,17 @@
+#define pii pair<int,int>
+
 class MinStack {
-    
-    stack<pair<int,int>> stk;
-    
+    stack<pii> stk;
 public:
     MinStack() {
         
     }
     
     void push(int val) {
-        int mini;
-        if(stk.empty()){
-            mini=val;
-        }
-        else{
+        int mini = val;
+        
+        if(!stk.empty())
             mini = min(stk.top().second,val);
-        }
         
         stk.push({val,mini});
     }
@@ -24,12 +21,14 @@ public:
     }
     
     int top() {
+        if(stk.empty())
+            return -1;
+        
         return stk.top().first;
     }
     
     int getMin() {
         return stk.top().second;
-
     }
 };
 
