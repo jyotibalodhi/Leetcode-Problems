@@ -3,12 +3,12 @@ public:
     
     void solve(vector<int> &nums, vector<vector<int>> &ans, vector<int> ds, int ind){
         
-        if(ind == nums.size()){
+        if(ind >= nums.size()){
             ans.push_back(ds);
             return;
         }
         
-        for(int i=0;i<nums.size();i++){
+          for(int i=0;i<nums.size();i++){
             if(nums[i] != 11)  //question constraint
             {
                 ds.push_back(nums[i]);
@@ -20,12 +20,13 @@ public:
             }
         }
     }
+    
     vector<vector<int>> permute(vector<int>& nums) {
         
         vector<vector<int>> ans;
         vector<int> ds;
-        
-        solve(nums,ans, ds,0);
+
+        solve(nums, ans, ds, 0);
         return ans;
     }
 };
