@@ -4,22 +4,29 @@ public:
         
         unordered_map<char,int> mp;
         
-        int i =0;
-        int j =0;
-        
         int n = s.length();
         
-        int len =0;
+        int i =0;
+        int j =0;
+        int len = 0;
         
         while(j < n){
             
-            if(mp.find(s[j]) != mp.end())   // already present in the substring
-            {
-                i = max(i, mp[s[j]]+1);
-            }            
-            
-            mp[s[j]] = j;
-            len = max(len, j-i+1);
+            mp[s[j]]++;
+
+            if(mp.size() == j-i+1){     // map size == window size means all unique char
+                len = max(len,j-i+1);
+            }
+            else{
+                while(mp.size() < j-i+1){
+                    mp[s[i]]--;
+                    if(mp[s[i]] == 0)
+                    {
+                        mp.erase(s[i]);
+                    }
+                    i++;
+                }
+            }
             j++;
         }
         
