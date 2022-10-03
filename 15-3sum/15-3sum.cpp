@@ -1,50 +1,60 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        int n=nums.size();
+       
         
-        set<vector<int>> s;
+        // as we do not require indexes we can sort the given array
+        // fix one number and apply binary search for next 2
+        
         
         sort(nums.begin(),nums.end());
         
-        for(int i=0;i<n-2;i++){
-            
-            int j=i+1;
-            int k=n-1;
-            
-            while(j<k){
-                // if(nums[i]==0 && nums[j]==0 && nums[k]==0){
-                //      vector<int> temp{nums[i],nums[j],nums[k]};
-                //      s.insert(temp);
-                //     j++;
-                //     k--;
-                //     continue;
-                // }
-                if(nums[i] + nums[j] +nums[k] == 0) 
-                {
-                    vector<int> temp{nums[i],nums[j],nums[k]};
-                    s.insert(temp);
-                    if(nums[j+1] == nums[j])
-                        while(j<k && nums[j+1] == nums[j]) j++;
-                    else
-                        j++;
-                    if(nums[k-1] == nums[k])
-                        while(j<k && nums[k-1] == nums[k]) k--;
-                    else
-                        k--;
+        int n = nums.size();
+        
+//         if(n < 3)                  // handled by constraints
+//             return {};
+        
+        vector<vector<int>> ans;
+        
+        for(int i=0;i<n;i++){
 
+                int l= i+1;
+                int h = n-1;
+
+                while(l <h){
+                    long sum = nums[i] + nums[l] + nums[h];
+                    int mid = l +(h-l/2);
+
+
+                    int numl = nums[l];
+                    int numh = nums[h];
+
+                    if(sum == 0){
+                        ans.push_back({nums[i],nums[l],nums[h]});
+
+                        while(l < h && nums[l] == numl)   
+                            l++;
+
+                        while(h > l && nums[h] == numh)  
+                            h--;
+
+                    }
+                    else if( sum < 0){
+                         while(l < h && nums[l] == numl)   
+                            l++;
+                    }
+                    else{
+                        while(h > l && nums[h] == numh)  
+                            h--;
+                    }       
                 }
-                else if(nums[i] + nums[j] +nums[k] < 0){
-                   j++;
-                }
-                else{
-                    
-                        k--;
-                }
-            }
+            
+            while(i+1 <n && nums[i+1] == nums[i])
+                i++;
         }
         
-        vector<vector<int>> res(s.begin(),s.end());
-        return res;
+        
+        return ans;
+        
     }
 };
