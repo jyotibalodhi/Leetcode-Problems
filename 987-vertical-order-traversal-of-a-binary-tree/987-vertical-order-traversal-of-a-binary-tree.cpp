@@ -13,39 +13,55 @@ class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         
-        map<int, map<int, multiset<int>>> nodes;
-        queue<pair<TreeNode *, pair<int,int>>> q;
+         if(!root)
+            return {};
         
-        q.push({root, {0,0}});
+        queue <pair<TreeNode*, int>> q;
+        map<int, vector<pair<int,int>>> mp;
         
+        q.push({root,0});
+        
+        int level =0;
+        // O(N)
         while(!q.empty()){
             
-            auto it = q.front();
-            q.pop();
+            int k = q.size();
             
-            TreeNode * node = it.first;
-            int x = it.second.first;
-            int y = it.second.second;
-            
-            nodes[x][y].insert(node->val);
-  
-                if(node->left)
-                    q.push({node->left,{x-1,y+1}});
-                
-                if(node->right)
-                    q.push({node->right,{x+1,y+1}});
+            while(k--){
+                auto curr = q.front();
+                q.pop();
 
+                int x = curr.second;
+                TreeNode* node = curr.first;
+
+                mp[x].push_back({level,node->val});
+
+                if(node->left)
+                    q.push({node->left,x-1});
+
+                if(node->right)
+                    q.push({node->right,x+1});
+            }
+            level++;
         }
         
         vector<vector<int>> ans;
         
-        for(auto i: nodes){
-            vector<int> col;
-            for(auto j: i.second){
-                col.insert(col.end(),j.second.begin(),j.second.end());
+        //  map<int, vector<pair<int,int>>> mp
+        
+        // O(h*n)
+        for(auto i: mp){
+            vector<pair<int,int>> col;
+            vector<int> temp;
+            for(auto j : i.second){
+                
+                col.push_back(j);
             }
-            
-            ans.push_back(col);
+            sort(col.begin(),col.end());
+            for(auto it: col){
+                temp.push_back(it.second);
+            }
+            ans.push_back(temp);
         }
         
         return ans;
