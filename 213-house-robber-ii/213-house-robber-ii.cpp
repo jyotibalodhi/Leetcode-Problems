@@ -1,30 +1,40 @@
 class Solution {
 public:
-    int solve(vector<int> arr){
+    
+    int solve(vector<int> &nums, int i,int n, vector<int> &dp){
         
-        int prev = arr[0];
-        int prev2= 0;
         
-        for(int i=1;i<arr.size();i++){
-            int rob = arr[i] +prev2;
-            
-            int notRob = prev;
-            
-            int curr = max(rob, notRob);
-            prev2 = prev;
-            prev = curr;
+        // base cases
+        
+        if(i > n){
+            return 0;
         }
         
-        return prev;
+        if(i == n){
+            return dp[i] = nums[i];
+        }
+        
+        if(dp[i] != -1)
+            return dp[i];
+        
+        int take = nums[i] + solve(nums,i+2,n,dp);
+        
+        int notTake =  0 + solve(nums,i+1,n,dp);
+        
+        return dp[i] = max(take,notTake);
     }
     
     int rob(vector<int>& nums) {
-    
-        if(nums.size()==1) return nums[0];  //edge case of only 1 element
+           
+        // two starting points 0,1
+        // TC:- O(n) SC:- O(2n)
+        int n = nums.size();
+        if(n==1)
+            return nums[0];
         
-        vector<int> temp(nums.begin()+1,nums.end()); // array from 1to n-1 index
-        nums.pop_back();  // array from 0 to n-2 index
+        vector<int> dp1(n,-1);
+        vector<int> dp2(n,-1);
         
-        return max(solve(temp) , solve(nums));
+        return max(solve(nums,0,n-2,dp1), solve(nums,1,n-1,dp2));
     }
 };
