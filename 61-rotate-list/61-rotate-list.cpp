@@ -11,40 +11,44 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if(!head || !head->next ||k==0) return head;
         
-        ListNode * fast =head;
-        ListNode * slow = fast;
+        if(!head || k ==0)
+            return head;
         
-       
-       
-        ListNode *temp = head;
-        int n=0;
-        while(temp){
-            n++;   //length of linked list
-            temp =temp->next;
-        }
-        
-        
-        while(k >n) k -= n;
-         if(k==n) return head;
+        int n =0;
+        ListNode * fast = head;
 
-         int i=k;
-        while(i--){
-            fast= fast->next;
+        while(fast){
+            fast = fast->next;
+            n++;
         }
         
-        while(fast->next){
-            fast=fast->next;
-            slow=slow->next;
+        k = k%n;
+        if(k == 0)
+            return head;
+  
+        fast = head;
+        ListNode * slow = head;
+        
+        
+        // find kth element from back
+        while(k--){
+            fast = fast->next;
         }
         
         
+        while(fast && fast->next){
+            fast = fast->next;
+            slow = slow->next;
+        }
         
         fast->next = head;
-        ListNode *node =slow->next;
-        slow->next = nullptr;
+        ListNode * newHead = slow->next;
+        slow->next = NULL;
         
-        return node;
+        
+        return newHead;
+        
+        
     }
 };
